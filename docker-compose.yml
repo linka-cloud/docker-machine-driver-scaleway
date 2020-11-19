@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  driver-scaleway:
+    image: docker-machine-scaleway-go
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/scaleway
+

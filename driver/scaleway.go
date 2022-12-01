@@ -25,7 +25,7 @@ const (
 	// VERSION represents the semver version of the package
 	VERSION      = "v2.0.0"
 	defaultImage = "ubuntu-focal"
-	DELAY        = 30 // in second
+	DELAY        = 5 // in second
 )
 
 var instanceApi *instance.API
@@ -104,7 +104,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage:  "Scaleway accesskey (required)",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "SCALEWAY_SECREYKEY",
+			EnvVar: "SCALEWAY_SECRETKEY",
 			Name:   "scaleway-secretkey",
 			Usage:  "Scaleway secretkey (required)",
 		},

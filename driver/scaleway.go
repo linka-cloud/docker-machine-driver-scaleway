@@ -50,6 +50,9 @@ type Driver struct {
 	stopping       bool
 	created        bool
 	ipv6           bool
+	rootVolumeSize int
+	rootVolumeType string
+
 	// userDataFile string
 }
 
@@ -159,6 +162,18 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		// 	Usage:  "Attach additional volume (e.g., 50G)",
 		// 	Value:  "",
 		// },
+		mcnflag.IntFlag{
+			EnvVar: "SCALEWAY_ROOT_VOLUME_SIZE",
+			Name:   "scaleway-root-volume-size",
+			Usage:  "Root Volume Size in GiB (e.g., 50)",
+			Value:  0,
+		},
+		mcnflag.StringFlag{
+			EnvVar: "SCALEWAY_ROOT_VOLUME_TYPE",
+			Name:   "scaleway-root-volume-type",
+			Usage:  "Root Volume Type: block or local",
+			Value:  "",
+		},
 		// mcnflag.StringFlag{
 		// 	EnvVar: "SCALEWAY_USER",
 		// 	Name:   "scaleway-user",
@@ -231,6 +246,14 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) (err error) {
 	d.bootscript = flags.String("scaleway-bootscript")
 	d.ip = flags.String("scaleway-ip")
 	// d.volumes = flags.String("scaleway-volumes")
+	d.rootVolumeSize = flags.Int("scaleway-root-volume-size")
+	d.rootVolumeType = flags.String("scaleway-root-volume-type")
+	if d.rootVolumeType != "" && d.rootVolumeType != "block" && d.rootVolumeType != "local" {
+		return fmt.Errorf("You must provide an known root-volume-type: local or block")
+	}
+	if d.rootVolumeType != "" && d.rootVolumeSize == 0 {
+		return fmt.Errorf("You must provide root-volume-size with root-volume-type")
+	}
 	d.ipv6 = flags.Bool("scaleway-ipv6")
 	// d.BaseDriver.SSHUser = flags.String("scaleway-user")
 	// d.BaseDriver.SSHPort = flags.Int("scaleway-port")
@@ -262,6 +285,7 @@ func (d *Driver) Create() (err error) {
 	var name string = d.name
 	var image string = d.image
 	var zone scw.Zone = d.Zone
+
 	log.Debugf("Creating server bootType: %s", bootType)
 	log.Debugf("Creating server Bootscript: %s", bootscript)
 	log.Debugf("Creating server projectId: %s", string(*projectId))
@@ -270,6 +294,26 @@ func (d *Driver) Create() (err error) {
 	log.Debugf("Creating server name: %s", name)
 	log.Debugf("Creating server image: %s", image)
 	log.Debugf("Creating server zone: %s", zone)
+	var volumes map[string]*instance.VolumeTemplate
+	if d.rootVolumeSize != 0 {
+		var t instance.VolumeVolumeType
+		switch d.rootVolumeType {
+		case "local":
+			t = instance.VolumeVolumeTypeLSSD
+		case "block":
+			t = instance.VolumeVolumeTypeBSSD
+		default:
+			return fmt.Errorf("You must provide an known root-volume-type: local or block")
+		}
+		volumes = map[string]*instance.VolumeTemplate{
+			"0": {
+				Size:       scw.Size(d.rootVolumeSize) * scw.GB,
+				VolumeType: t,
+			},
+		}
+		log.Debugf("Creating server volume type: %s", d.rootVolumeType)
+		log.Debugf("Creating server volume size: %d GB", d.rootVolumeSize)
+	}
 
 	config := instance.CreateServerRequest{
 		Zone: zone,
@@ -277,9 +321,9 @@ func (d *Driver) Create() (err error) {
 		// DynamicIPRequired: &dynamicIP,
 		CommercialType: commercialType,
 		Image:          image,
-		// Volumes:          		volumes,
-		EnableIPv6: ipv6,
-		BootType:   &bootType,
+		Volumes:        volumes,
+		EnableIPv6:     ipv6,
+		BootType:       &bootType,
 		// Bootscript: &bootscript,
 		// Organization:   organizationId,
 		Project: projectId,
@@ -436,15 +480,15 @@ func (d *Driver) getClient() (err error) {
 }
 
 /*
-	cloudInit used to add docker-machine sshkey to Scaleway Instance
+cloudInit used to add docker-machine sshkey to Scaleway Instance
 
-	Multiple choices are possible:
-		- Use Modules "users":
-			- without runcmd to reload cloud-init config no sshkey added to root user :thinking: why ? so KO
-			- with runcmd to reload cloud-init config to apply config, sshkey is added to root user but sshkey from scaleway are setted to 'no-port-forwarding, ...'  :thinking: why ? so OK and KO
-		- Use Scaleway implementation with instance_keys file and scw-fetch-ssh-keys command is OK
+Multiple choices are possible:
+  - Use Modules "users":
+  - without runcmd to reload cloud-init config no sshkey added to root user :thinking: why ? so KO
+  - with runcmd to reload cloud-init config to apply config, sshkey is added to root user but sshkey from scaleway are setted to 'no-port-forwarding, ...'  :thinking: why ? so OK and KO
+  - Use Scaleway implementation with instance_keys file and scw-fetch-ssh-keys command is OK
 
-	***** It's very "sensible"...  *****
+***** It's very "sensible"...  *****
 */
 func (d *Driver) cloudInit() (contentByte string, err error) {
 	pub := d.GetSSHKeyPath() + ".pub"

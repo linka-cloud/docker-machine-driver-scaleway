@@ -21,7 +21,7 @@ RUN git clone --branch=v0.16.2-gitlab.21  https://gitlab.com/gitlab-org/ci-cd/do
 RUN CGO_ENABLED=0 GO111MODULE=off go build -o docker-machine -trimpath -ldflags="-s -w" ./cmd/docker-machine
 
 
-FROM gitlab/gitlab-runner
+FROM gitlab/gitlab-runner:alpine-v16.8.0
 
 COPY --from=0 /docker-machine-driver-scaleway/docker-machine-driver-scaleway /usr/local/bin/docker-machine-driver-scaleway-v2
 COPY --from=1 /go/src/github.com/docker/machine/docker-machine /usr/local/bin/docker-machine

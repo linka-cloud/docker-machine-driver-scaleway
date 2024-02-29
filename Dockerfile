@@ -17,7 +17,9 @@ RUN apk add --no-cache git
 
 WORKDIR /go/src/github.com/docker/machine
 
-RUN git clone --branch=v0.16.2-gitlab.21  https://gitlab.com/gitlab-org/ci-cd/docker-machine .
+ARG DOCKER_MACHINE_VERSION=v0.16.2-gitlab.21
+
+RUN git clone --branch=${DOCKER_MACHINE_VERSION}  https://gitlab.com/gitlab-org/ci-cd/docker-machine .
 RUN CGO_ENABLED=0 GO111MODULE=off go build -o docker-machine -trimpath -ldflags="-s -w" ./cmd/docker-machine
 
 

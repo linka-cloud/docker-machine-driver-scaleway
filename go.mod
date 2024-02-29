@@ -34,5 +34,5 @@ require (
 	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 	gotest.tools v2.2.0+incompatible // indirect
-	moul.io/anonuuid v1.2.1
+	moul.io/anonuuid v1.3.2
 )

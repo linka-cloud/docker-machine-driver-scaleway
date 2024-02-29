@@ -97,6 +97,7 @@ github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/tent/http-link-go v0.0.0-20130702225549-ac974c61c2f9/go.mod h1:RHkNRtSLfOK7qBTHaeSX1D6BNpI3qw7NTxsmNr4RvN8=
 github.com/urfave/cli v1.22.1/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtXRu0=
+github.com/urfave/cli v1.22.5/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtXRu0=
 github.com/vmware/govcloudair v0.0.2/go.mod h1:Vxktpba+eP4dX5YzYP869DRPSm5ChQ2A/GUrmKSLvlo=
 github.com/vmware/govmomi v0.6.2/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
 golang.org/x/crypto v0.0.0-20170704135851-51714a8c4ac1/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
@@ -142,3 +143,5 @@ gotest.tools v2.2.0+incompatible h1:VsBPFP1AI068pPrMxtb/S8Zkgf9xEmTLJjfM+P5UIEo=
 gotest.tools v2.2.0+incompatible/go.mod h1:DsYFclhRJ6vuDpmuTbkuFWG+y2sxOXAzmJt81HFBacw=
 moul.io/anonuuid v1.2.1 h1:e8i1p4eQgqQtPhSvGdGSYgwpH8ARIooax1SA7SXomFU=
 moul.io/anonuuid v1.2.1/go.mod h1:CrFa/y2QwRSpGS7PLH+NyzmlAjUQTNpW6z/dfvuVDFI=
+moul.io/anonuuid v1.3.2/go.mod h1:fijmP4WPvGy80Mn0PJVItKXgMt+bcOXHMzItOZu0emI=
+moul.io/srand v1.6.1/go.mod h1:P2uaZB+GFstFNo8sEj6/U8FRV1n25kD0LLckFpJ+qvc=

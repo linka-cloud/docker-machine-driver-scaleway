@@ -1,5 +1,5 @@
 # renovate: datasource=gitlab-tags depName=gitlab-org/gitlab-runner versioning=semver
-ARG GITLAB_RUNNER_VERSION=v16.9.1
+ARG GITLAB_RUNNER_VERSION=v16.11.1
 ARG GITLAB_RUNNER_IMAGE=gitlab/gitlab-runner:alpine-${GITLAB_RUNNER_VERSION}
 
 FROM golang:alpine

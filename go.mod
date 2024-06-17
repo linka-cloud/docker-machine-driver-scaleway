@@ -25,14 +25,14 @@ require (
 	github.com/renstrom/fuzzysearch v1.1.0 // indirect
 	github.com/samalba/dockerclient v0.0.0-20160531175551-a30362618471 // indirect
 	github.com/scaleway/scaleway-cli v1.11.1
-	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.7
+	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.28
 	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/objx v0.1.1 // indirect
 	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
 	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
-	gopkg.in/yaml.v2 v2.3.0
+	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools v2.2.0+incompatible // indirect
 	moul.io/anonuuid v1.2.1
 )

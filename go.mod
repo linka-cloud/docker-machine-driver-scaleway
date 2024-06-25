@@ -1,7 +1,7 @@
 module github.com/scaleway/docker-machine-driver-scaleway
 
 replace (
-	github.com/Sirupsen/logrus => github.com/sirupsen/logrus v1.4.2
+	github.com/Sirupsen/logrus => github.com/sirupsen/logrus v1.9.3
 	github.com/docker/docker => github.com/docker/engine v1.4.2-0.20190822205725-ed20165a37b4
 	github.com/renstrom/fuzzysearch v1.1.0 => github.com/lithammer/fuzzysearch v1.1.0
 )

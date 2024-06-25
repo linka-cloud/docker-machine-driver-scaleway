@@ -15,7 +15,7 @@ import (
 	"github.com/docker/machine/libmachine/ssh"
 	"github.com/docker/machine/libmachine/state"
 
-	instance "github.com/scaleway/scaleway-sdk-go/api/instance/v1"
+	"github.com/scaleway/scaleway-sdk-go/api/instance/v1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 
 	"github.com/sirupsen/logrus"
@@ -294,7 +294,7 @@ func (d *Driver) Create() (err error) {
 	log.Debugf("Creating server name: %s", name)
 	log.Debugf("Creating server image: %s", image)
 	log.Debugf("Creating server zone: %s", zone)
-	var volumes map[string]*instance.VolumeTemplate
+	var volumes map[string]*instance.VolumeServerTemplate
 	if d.rootVolumeSize != 0 {
 		var t instance.VolumeVolumeType
 		switch d.rootVolumeType {
@@ -305,9 +305,10 @@ func (d *Driver) Create() (err error) {
 		default:
 			return fmt.Errorf("You must provide an known root-volume-type: local or block")
 		}
-		volumes = map[string]*instance.VolumeTemplate{
+		size := scw.Size(d.rootVolumeSize) * scw.GB
+		volumes = map[string]*instance.VolumeServerTemplate{
 			"0": {
-				Size:       scw.Size(d.rootVolumeSize) * scw.GB,
+				Size:       &size,
 				VolumeType: t,
 			},
 		}
@@ -322,7 +323,7 @@ func (d *Driver) Create() (err error) {
 		CommercialType: commercialType,
 		Image:          image,
 		Volumes:        volumes,
-		EnableIPv6:     ipv6,
+		EnableIPv6:     &ipv6,
 		BootType:       &bootType,
 		// Bootscript: &bootscript,
 		// Organization:   organizationId,

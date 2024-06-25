@@ -27,3 +27,5 @@
 # *.prof
 
 /docker-machine-driver-scaleway
+/docker-machine-driver-scaleway-v2
+.env

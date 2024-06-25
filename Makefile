@@ -8,7 +8,8 @@ docker: docker-build docker-push
 
 docker-build:
 	@docker build --target docker-machine -t $(DOCKER_MACHINE_IMAGE) .
-	@docker build --target gitlab-runner -t $(RUNNER_IMAGE):$(RUNNER_VERSION) .
+	@docker build --target gitlab-runner -t $(RUNNER_IMAGE):$(RUNNER_VERSION) -t $(RUNNER_IMAGE):latest .
 docker-push:
 	@docker push $(DOCKER_MACHINE_IMAGE)
 	@docker push $(RUNNER_IMAGE):$(RUNNER_VERSION)
+	@docker push $(RUNNER_IMAGE):latest

@@ -2,7 +2,7 @@ DOCKER_MACHINE_IMAGE := linkacloud/docker-machine-scaleway
 RUNNER_IMAGE := linkacloud/gitlab-runner-docker-machine-scaleway
 
 # renovate: datasource=gitlab-tags depName=gitlab-org/gitlab-runner versioning=semver
-RUNNER_VERSION := v17.1.0
+RUNNER_VERSION := v17.3.1
 
 docker: docker-build docker-push
 

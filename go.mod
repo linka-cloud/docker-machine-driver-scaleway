@@ -13,7 +13,7 @@ require (
 	github.com/docker/docker v27.0.1+incompatible // indirect
 	github.com/docker/machine v0.16.2
 	github.com/pkg/errors v0.8.1 // indirect
-	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.28
+	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.30
 	github.com/sirupsen/logrus v1.9.3
 	golang.org/x/crypto v0.24.0 // indirect
 	gotest.tools v2.2.0+incompatible // indirect

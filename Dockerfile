@@ -27,14 +27,14 @@ ARG DOCKER_MACHINE_VERSION=v0.16.2-gitlab.26
 RUN git clone --branch=${DOCKER_MACHINE_VERSION}  https://gitlab.com/gitlab-org/ci-cd/docker-machine .
 RUN CGO_ENABLED=0 GO111MODULE=on go build -o docker-machine -trimpath -ldflags="-s -w" ./cmd/docker-machine
 
-FROM ${GITLAB_RUNNER_IMAGE} as gitlab-runner
+FROM ${GITLAB_RUNNER_IMAGE} AS gitlab-runner
 
 COPY --from=0 /docker-machine-driver-scaleway/docker-machine-driver-scaleway /usr/local/bin/docker-machine-driver-scaleway-v2
 COPY --from=1 /go/src/github.com/docker/machine/docker-machine /usr/local/bin/docker-machine
 
 VOLUME /root/.docker/machine
 
-FROM alpine as docker-machine
+FROM alpine AS docker-machine
 
 RUN apk add --no-cache ca-certificates
 
